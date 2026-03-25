@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-50 text-gray-900;
+}
+
+/* Recipe details (view page): print only .print-area; scoped so other pages are unaffected */
+@media print {
+  body:has(.print-area) * {
+    visibility: hidden;
+  }
+
+  body:has(.print-area) .print-area,
+  body:has(.print-area) .print-area * {
+    visibility: visible;
+  }
+
+  body:has(.print-area) .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  /* Recipe print: table + instructions stay readable, no gray “muted” look */
+  body:has(.print-area) .print-area table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  body:has(.print-area) .print-area th,
+  body:has(.print-area) .print-area td {
+    border: 1px solid #ccc;
+    padding: 0.35rem 0.5rem;
+    text-align: left;
+  }
+
+  body:has(.print-area) .print-area th {
+    background: #f5f5f5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
