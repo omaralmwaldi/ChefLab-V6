@@ -29,7 +29,7 @@ class RecipeCreateSerializer(serializers.Serializer):
         max_digits=10, decimal_places=3, required=False, allow_null=True
     )
     instructions = serializers.CharField(required=False, allow_blank=True)
-    # ingredients = RecipeIngredientInputSerializer(many=True, write_only=True)
+    ingredients = RecipeIngredientInputSerializer(many=True, required=True)
 
     def validate_sku(self, value):
         if Recipe.objects.filter(sku=value).exists():
@@ -59,9 +59,12 @@ class RecipeCreateSerializer(serializers.Serializer):
     def create(self, validated_data):
         from categories.models import Category
 
-        ingredients_data = validated_data.pop("ingredients")
-        category = Category.objects.get(pk=validated_data["category_id"])
-        validated_data.pop("category_id")
+        ingredients_data = validated_data.pop("ingredients", None)
+        if not ingredients_data:
+            raise serializers.ValidationError(
+                {"ingredients": ["At least one ingredient is required."]}
+            )
+        category = Category.objects.get(pk=validated_data.pop("category_id"))
         recipe = Recipe.objects.create(
             category=category,
             author=self.context["request"].user,
