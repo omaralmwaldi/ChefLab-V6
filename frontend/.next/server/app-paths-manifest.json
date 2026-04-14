@@ -1,11 +1,10 @@
 {
   "/login/page": "app/login/page.js",
+  "/(main)/dashboard/page": "app/(main)/dashboard/page.js",
   "/(main)/recipes/create/page": "app/(main)/recipes/create/page.js",
-  "/(main)/review-recipes/page": "app/(main)/review-recipes/page.js",
-  "/(main)/recipes/[id]/edit/page": "app/(main)/recipes/[id]/edit/page.js",
-  "/(main)/final-recipes/page": "app/(main)/final-recipes/page.js",
-  "/(main)/ingredients/page": "app/(main)/ingredients/page.js",
   "/(main)/draft-recipes/page": "app/(main)/draft-recipes/page.js",
-  "/(main)/categories/page": "app/(main)/categories/page.js",
-  "/(main)/dashboard/page": "app/(main)/dashboard/page.js"
+  "/(main)/final-recipes/page": "app/(main)/final-recipes/page.js",
+  "/(main)/review-recipes/page": "app/(main)/review-recipes/page.js",
+  "/(main)/ingredients/page": "app/(main)/ingredients/page.js",
+  "/(main)/categories/page": "app/(main)/categories/page.js"
 }

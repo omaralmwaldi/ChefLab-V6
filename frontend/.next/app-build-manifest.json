@@ -1,20 +1,15 @@
 {
   "pages": {
-    "/page": [
+    "/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/chunks/app/login/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/css-app_globals_css.css",
       "static/chunks/app/layout.js"
-    ],
-    "/login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/login/page.js"
     ],
     "/(main)/dashboard/page": [
       "static/chunks/webpack.js",
@@ -25,21 +20,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(main)/layout.js"
-    ],
-    "/(main)/ingredients/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(main)/ingredients/page.js"
-    ],
-    "/(main)/categories/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(main)/categories/page.js"
-    ],
-    "/(main)/final-recipes/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(main)/final-recipes/page.js"
     ],
     "/(main)/recipes/create/page": [
       "static/chunks/webpack.js",
@@ -56,20 +36,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(main)/review-recipes/page.js"
     ],
-    "/(main)/recipes/[id]/view/page": [
+    "/(main)/final-recipes/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/recipes/[id]/view/page.js"
+      "static/chunks/app/(main)/final-recipes/page.js"
     ],
-    "/(main)/recipes/[id]/edit/page": [
+    "/(main)/ingredients/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/recipes/[id]/edit/page.js"
+      "static/chunks/app/(main)/ingredients/page.js"
     ],
-    "/(main)/recipes/page": [
+    "/(main)/categories/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/recipes/page.js"
+      "static/chunks/app/(main)/categories/page.js"
     ]
   }
 }
