@@ -1,10 +1,9 @@
 {
-  "/login/page": "app/login/page.js",
-  "/(main)/dashboard/page": "app/(main)/dashboard/page.js",
-  "/(main)/ingredients/page": "app/(main)/ingredients/page.js",
-  "/(main)/recipes/[id]/edit/page": "app/(main)/recipes/[id]/edit/page.js",
   "/(main)/recipes/page": "app/(main)/recipes/page.js",
+  "/(main)/ingredients/page": "app/(main)/ingredients/page.js",
+  "/(main)/dashboard/page": "app/(main)/dashboard/page.js",
+  "/(main)/recipes/[id]/edit/page": "app/(main)/recipes/[id]/edit/page.js",
   "/(main)/categories/page": "app/(main)/categories/page.js",
   "/(main)/roles/page": "app/(main)/roles/page.js",
-  "/(main)/recipes/[id]/view/page": "app/(main)/recipes/[id]/view/page.js"
+  "/(main)/users/page": "app/(main)/users/page.js"
 }
