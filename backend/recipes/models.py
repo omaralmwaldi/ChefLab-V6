@@ -2,35 +2,24 @@ from django.db import models
 
 
 class Recipe(models.Model):
-    """
-    Recipe: belongs to one Category and one User (author). N:1 with both.
-    Instructions store HTML from Tiptap editor.
-    """
-
     class Status(models.TextChoices):
         DRAFT = "draft", "Draft"
-        REVIEW = "review", "Review"
         FINAL = "final", "Final"
 
-    name_en = models.CharField(max_length=200)
-    name_ar = models.CharField(max_length=200, blank=True)
+    name_en = models.CharField(max_length=255)
+    name_ar = models.CharField(max_length=255, blank=True)
     sku = models.CharField(max_length=50, unique=True)
     category = models.ForeignKey(
         "categories.Category",
         on_delete=models.PROTECT,
         related_name="recipes",
+        null=True,
+        blank=True,
     )
-    storage_unit = models.CharField(max_length=50, blank=True)
-    net_weight = models.DecimalField(
-        max_digits=10, decimal_places=2, null=True, blank=True
-    )
-    instructions = models.TextField(blank=True)  # HTML from Tiptap
-    status = models.CharField(
-        max_length=20,
-        choices=Status.choices,
-        default=Status.DRAFT,
-    )
-    author = models.ForeignKey(
+    unit = models.CharField(max_length=50, blank=True)
+    net_weight = models.FloatField(null=True, blank=True)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.DRAFT)
+    created_by = models.ForeignKey(
         "accounts.User",
         on_delete=models.PROTECT,
         related_name="recipes",
@@ -41,43 +30,48 @@ class Recipe(models.Model):
         return self.name_en
 
 
-class RecipeIngredient(models.Model):
-    """
-    Join table: Recipe M:N Ingredient. One quantity per (recipe, ingredient).
-    Unique (recipe, ingredient) prevents duplicate ingredients in a recipe.
-    Unit comes from Ingredient.unit.
-    """
+class RecipeSection(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name="recipe_ingredients",
+        related_name="sections",
+    )
+    title_en = models.CharField(max_length=255)
+    title_ar = models.CharField(max_length=255, blank=True)
+    instructions = models.TextField(blank=True)
+    order = models.PositiveIntegerField(default=1)
+    allowed_roles = models.ManyToManyField("accounts.Role", related_name="recipe_sections")
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return f"{self.recipe.name_en} - {self.title_en}"
+
+
+class SectionIngredient(models.Model):
+    section = models.ForeignKey(
+        RecipeSection,
+        on_delete=models.CASCADE,
+        related_name="ingredients",
     )
     ingredient = models.ForeignKey(
         "ingredients.Ingredient",
-        on_delete=models.CASCADE,
-        related_name="recipe_ingredients",
+        on_delete=models.PROTECT,
+        related_name="section_ingredients",
     )
-    quantity = models.DecimalField(
-        max_digits=12, decimal_places=2, null=True, blank=True
-    )
+    quantity = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    unit = models.CharField(max_length=50, blank=True)
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["recipe", "ingredient"],
-                name="unique_recipe_ingredient",
-            )
-        ]
+        ordering = ["id"]
 
     def __str__(self):
-        return f"{self.recipe.name_en} — {self.ingredient.name_en}"
+        return f"{self.section.title_en} - {self.ingredient.name_en}"
 
 
 class ReviewRequest(models.Model):
-    """
-    Recipe review workflow: one Recipe, requested by one User, reviewed by one User.
-    N:1 with Recipe; N:1 with User (requested_by and reviewed_by).
-    """
+    """Kept for backward compatibility; no longer used by recipe workflow."""
 
     class Status(models.TextChoices):
         PENDING = "pending", "Pending"
@@ -111,4 +105,4 @@ class ReviewRequest(models.Model):
     reviewed_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f"Review #{self.pk} — {self.recipe.name_en} ({self.status})"
+        return f"Review #{self.pk} - {self.recipe.name_en} ({self.status})"

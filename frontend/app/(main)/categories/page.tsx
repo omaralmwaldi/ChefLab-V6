@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { categoriesApi } from "@/lib/api";
+import { isArabicLocale } from "@/lib/locale";
 
 type Category = {
   id: number;
@@ -10,6 +12,10 @@ type Category = {
 };
 
 export default function CategoriesPage() {
+  const locale = useLocale();
+  const tNav = useTranslations("nav");
+  const tCommon = useTranslations("common");
+  const isArabic = isArabicLocale(locale);
   const [list, setList] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -77,7 +83,7 @@ export default function CategoriesPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-semibold">Categories</h1>
+      <h1 className="mb-6 text-2xl font-semibold">{tNav("categories")}</h1>
       {error && <p className="mb-4 text-sm text-red-600">{error}</p>}
 
       <form onSubmit={handleCreate} className="mb-8 rounded-lg border bg-white p-4 shadow-sm">
@@ -97,14 +103,14 @@ export default function CategoriesPage() {
             className="rounded border border-gray-300 px-3 py-2"
           />
           <button type="submit" className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
-            Add
+            {tCommon("create")}
           </button>
         </div>
       </form>
 
       <div className="rounded-lg border bg-white shadow-sm overflow-hidden">
         {loading ? (
-          <p className="p-4 text-gray-500">Loading...</p>
+          <p className="p-4 text-gray-500">{tCommon("loading")}</p>
         ) : (
           <table className="w-full">
             <thead className="bg-gray-50">
@@ -139,11 +145,11 @@ export default function CategoriesPage() {
                     </>
                   ) : (
                     <>
-                      <td className="px-4 py-2">{item.name_en}</td>
-                      <td className="px-4 py-2">{item.name_ar || "—"}</td>
+                      <td className="px-4 py-2">{isArabic && item.name_ar ? item.name_ar : item.name_en}</td>
+                      <td className="px-4 py-2">{isArabic ? item.name_en || "—" : item.name_ar || "—"}</td>
                       <td className="px-4 py-2 text-right">
-                        <button onClick={() => startEdit(item)} className="mr-2 text-blue-600 hover:underline">Edit</button>
-                        <button onClick={() => handleDelete(item.id)} className="text-red-600 hover:underline">Delete</button>
+                        <button onClick={() => startEdit(item)} className="mr-2 text-blue-600 hover:underline">{tCommon("edit")}</button>
+                        <button onClick={() => handleDelete(item.id)} className="text-red-600 hover:underline">{tCommon("delete")}</button>
                       </td>
                     </>
                   )}

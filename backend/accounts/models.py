@@ -27,28 +27,33 @@ class UserManager(BaseUserManager):
 
 
 class Role(models.Model):
-    """User role (e.g. author, reviewer, admin)."""
+    """User role with explicit RBAC permissions."""
 
-    name = models.CharField(max_length=50, unique=True)
-    description = models.CharField(max_length=255, blank=True)
+    name_en = models.CharField(max_length=100, unique=True)
+    name_ar = models.CharField(max_length=100)
+    can_access_dashboard = models.BooleanField(default=False)
+    can_access_recipes = models.BooleanField(default=False)
+    can_create_recipe = models.BooleanField(default=False)
+    can_access_draft_recipe = models.BooleanField(default=False)
+    can_manage_ingredients = models.BooleanField(default=False)
+    can_manage_categories = models.BooleanField(default=False)
+    can_manage_roles = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return self.name_en
 
 
 class User(AbstractUser):
     """
-    Custom user: one Role per user (N:1 with Role).
+    Custom user: many roles per user (M:N with Role).
     Email used for login.
     """
 
     username = models.CharField(max_length=150, blank=True, null=True, unique=False)
     email = models.EmailField(unique=True)
-    role = models.ForeignKey(
+    roles = models.ManyToManyField(
         Role,
-        on_delete=models.PROTECT,
         related_name="users",
-        null=True,
         blank=True,
     )
 
@@ -56,6 +61,14 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+    def has_permission(self, permission_name: str) -> bool:
+        """Return True if any assigned role grants the named permission."""
+        if not permission_name:
+            return False
+        if self.is_superuser:
+            return True
+        return self.roles.filter(**{permission_name: True}).exists()
 
     def __str__(self):
         return self.email

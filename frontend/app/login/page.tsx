@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { auth } from "@/lib/api";
-import { setTokens } from "@/lib/auth";
+import { setSession } from "@/lib/auth";
 
 export default function LoginPage() {
   const router = useRouter();
+  const tAuth = useTranslations("auth");
+  const tUsers = useTranslations("users");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,7 +21,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const { data } = await auth.login(email, password);
-      setTokens(data.access, data.refresh);
+      setSession(data.access, data.refresh, data.user);
       router.replace("/dashboard");
     } catch (err: unknown) {
       const msg =
@@ -35,10 +37,10 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow">
-        <h1 className="mb-6 text-center text-xl font-semibold">ChefLab — Login</h1>
+        <h1 className="mb-6 text-center text-xl font-semibold">{tAuth("loginTitle")}</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="mb-1 block text-sm text-gray-600">Email</label>
+            <label className="mb-1 block text-sm text-gray-600">{tUsers("email")}</label>
             <input
               type="email"
               value={email}
@@ -48,7 +50,7 @@ export default function LoginPage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm text-gray-600">Password</label>
+            <label className="mb-1 block text-sm text-gray-600">{tUsers("password")}</label>
             <input
               type="password"
               value={password}
@@ -63,11 +65,11 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full rounded bg-blue-600 py-2 font-medium text-white hover:bg-blue-700 disabled:opacity-50"
           >
-            {loading ? "Signing in..." : "Sign in"}
+            {loading ? tAuth("signingIn") : tAuth("signIn")}
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-500">
-          No account? Use the API to register, or ask your admin.
+          {tAuth("noAccountHelp")}
         </p>
       </div>
     </div>

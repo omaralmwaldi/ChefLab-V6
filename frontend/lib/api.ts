@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearAuth, type AuthUser, type Role } from "@/lib/auth";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 
@@ -18,8 +19,7 @@ api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401 && typeof window !== "undefined") {
-      localStorage.removeItem("access");
-      localStorage.removeItem("refresh");
+      clearAuth();
       window.location.href = "/login";
     }
     return Promise.reject(err);
@@ -28,9 +28,54 @@ api.interceptors.response.use(
 
 export const auth = {
   login: (email: string, password: string) =>
-    api.post<{ access: string; refresh: string }>("/auth/login/", { email, password }),
+    api.post<{ access: string; refresh: string; user: AuthUser }>("/auth/login/", {
+      email,
+      password,
+    }),
   register: (email: string, password: string, first_name?: string, last_name?: string) =>
     api.post("/auth/register/", { email, password, first_name, last_name }),
+};
+
+export const rolesApi = {
+  list: () => api.get<Role[]>("/auth/roles/"),
+  create: (data: Omit<Role, "id">) => api.post<Role>("/auth/roles/", data),
+  update: (id: number, data: Partial<Omit<Role, "id">>) => api.put<Role>(`/auth/roles/${id}/`, data),
+  delete: (id: number) => api.delete(`/auth/roles/${id}/`),
+};
+
+export type UserManagementUser = {
+  id: number;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  roles: Role[];
+};
+
+export const usersApi = {
+  list: () => api.get<UserManagementUser[]>("/users/"),
+  create: (data: {
+    username: string;
+    password: string;
+    first_name?: string;
+    last_name?: string;
+    email: string;
+    roles: number[];
+  }) =>
+    api.post<UserManagementUser>("/users/", data),
+  get: (id: number) => api.get<UserManagementUser>(`/users/${id}/`),
+  update: (
+    id: number,
+    data: Partial<{
+      username: string;
+      first_name: string;
+      last_name: string;
+      email: string;
+      password: string;
+      role_ids: number[];
+    }>,
+  ) => api.patch<UserManagementUser>(`/users/${id}/`, data),
+  delete: (id: number) => api.delete(`/users/${id}/`),
 };
 
 export const ingredientsApi = {
@@ -52,14 +97,44 @@ export const categoriesApi = {
 };
 
 export const recipesApi = {
+  list: (status?: "draft" | "final") =>
+    api.get("/recipes/", { params: status ? { status } : undefined }),
+  get: (id: number) => api.get(`/recipes/${id}/`),
   create: (data: {
-    name_en: string;
+    name_en?: string;
     name_ar?: string;
-    sku: string;
-    category_id: number;
-    storage_unit?: string;
+    sku?: string;
+    category_id?: number;
+    unit?: string;
     net_weight?: number;
-    instructions?: string;
-    ingredients: { ingredient_id: number; quantity?: number }[];
+    sections?: Array<{
+      title_en: string;
+      title_ar?: string;
+      instructions?: string;
+      order?: number;
+      allowed_roles: number[];
+      ingredients?: Array<{ ingredient_id: number; quantity?: number }>;
+    }>;
   }) => api.post("/recipes/", data),
+  update: (
+    id: number,
+    data: Partial<{
+      name_en: string;
+      name_ar: string;
+      sku: string;
+      category_id: number | null;
+      unit: string;
+      net_weight: number | null;
+      finalize: boolean;
+      sections: Array<{
+        title_en: string;
+        title_ar?: string;
+        instructions?: string;
+        order?: number;
+        allowed_roles: number[];
+        ingredients?: Array<{ ingredient_id: number; quantity?: number }>;
+      }>;
+    }>,
+  ) => api.patch(`/recipes/${id}/`, data),
+  delete: (id: number) => api.delete(`/recipes/${id}/`),
 };

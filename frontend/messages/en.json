@@ -1,0 +1,83 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "loading": "Loading...",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "actions": "Actions",
+    "noDataDash": "—"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "recipes": "Recipes",
+    "ingredients": "Ingredients",
+    "categories": "Categories",
+    "roles": "Roles",
+    "users": "Users",
+    "logout": "Logout",
+    "language": "Language",
+    "brand": "ChefLab"
+  },
+  "recipes": {
+    "title": "Recipes",
+    "createRecipe": "Create Recipe",
+    "createDraft": "Create Draft",
+    "viewRecipe": "View Recipe",
+    "recipeInformation": "Recipe Information",
+    "sections": "Sections",
+    "ingredients": "Ingredients",
+    "instructions": "Instructions",
+    "noIngredients": "No ingredients.",
+    "noInstructions": "No instructions.",
+    "draft": "Draft",
+    "final": "Final",
+    "status": "Status",
+    "sku": "SKU",
+    "englishName": "English Name",
+    "arabicName": "Arabic Name",
+    "category": "Category",
+    "unit": "Unit",
+    "netWeight": "Net Weight",
+    "print": "Print"
+  },
+  "users": {
+    "title": "Users",
+    "createUser": "Create User",
+    "editUser": "Edit User",
+    "assignRoles": "Assign roles",
+    "noRoles": "No roles",
+    "username": "Username",
+    "email": "Email",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "password": "Password",
+    "newPasswordHint": "Leave blank to keep current password",
+    "fullName": "Full Name"
+  },
+  "roles": {
+    "title": "Roles"
+  },
+  "permissions": {
+    "can_access_dashboard": "Access Dashboard",
+    "can_access_recipe": "Access Recipes",
+    "can_access_recipes": "Access Recipes",
+    "can_create_recipe": "Create Recipe",
+    "can_access_draft_recipe": "Access Draft Recipes",
+    "can_manage_ingredients": "Manage Ingredients",
+    "can_manage_category": "Manage Categories",
+    "can_manage_categories": "Manage Categories",
+    "can_manage_roles": "Manage Roles"
+  },
+  "auth": {
+    "loginTitle": "ChefLab - Login",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "noAccountHelp": "No account? Use the API to register, or ask your admin."
+  },
+  "home": {
+    "redirecting": "Redirecting..."
+  }
+}

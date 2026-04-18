@@ -33,6 +33,7 @@ staticfiles/
 node_modules/
 dist/
 build/
+.next/
 
 # Logs
 

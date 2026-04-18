@@ -1,0 +1,83 @@
+{
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "back": "رجوع",
+    "loading": "جاري التحميل...",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "actions": "الإجراءات",
+    "noDataDash": "-"
+  },
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "recipes": "الوصفات",
+    "ingredients": "المكونات",
+    "categories": "التصنيفات",
+    "roles": "الأدوار",
+    "users": "المستخدمون",
+    "logout": "تسجيل الخروج",
+    "language": "اللغة",
+    "brand": "شيف لاب"
+  },
+  "recipes": {
+    "title": "الوصفات",
+    "createRecipe": "إنشاء وصفة",
+    "createDraft": "إنشاء مسودة",
+    "viewRecipe": "عرض الوصفة",
+    "recipeInformation": "معلومات الوصفة",
+    "sections": "الأقسام",
+    "ingredients": "المكونات",
+    "instructions": "التعليمات",
+    "noIngredients": "لا توجد مكونات.",
+    "noInstructions": "لا توجد تعليمات.",
+    "draft": "مسودة",
+    "final": "نهائية",
+    "status": "الحالة",
+    "sku": "رمز الصنف",
+    "englishName": "الاسم الإنجليزي",
+    "arabicName": "الاسم العربي",
+    "category": "التصنيف",
+    "unit": "الوحدة",
+    "netWeight": "الوزن الصافي",
+    "print": "طباعة"
+  },
+  "users": {
+    "title": "المستخدمون",
+    "createUser": "إنشاء مستخدم",
+    "editUser": "تعديل المستخدم",
+    "assignRoles": "تعيين الأدوار",
+    "noRoles": "لا توجد أدوار",
+    "username": "اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "password": "كلمة المرور",
+    "newPasswordHint": "اترك الحقل فارغا للإبقاء على كلمة المرور الحالية",
+    "fullName": "الاسم الكامل"
+  },
+  "roles": {
+    "title": "الأدوار"
+  },
+  "permissions": {
+    "can_access_dashboard": "الوصول إلى لوحة التحكم",
+    "can_access_recipe": "الوصول إلى الوصفات",
+    "can_access_recipes": "الوصول إلى الوصفات",
+    "can_create_recipe": "إنشاء وصفة",
+    "can_access_draft_recipe": "الوصول إلى الوصفات المسودة",
+    "can_manage_ingredients": "إدارة المكونات",
+    "can_manage_category": "إدارة التصنيفات",
+    "can_manage_categories": "إدارة التصنيفات",
+    "can_manage_roles": "إدارة الأدوار"
+  },
+  "auth": {
+    "loginTitle": "شيف لاب - تسجيل الدخول",
+    "signIn": "تسجيل الدخول",
+    "signingIn": "جاري تسجيل الدخول...",
+    "noAccountHelp": "لا يوجد حساب؟ استخدم واجهة API للتسجيل أو تواصل مع المسؤول."
+  },
+  "home": {
+    "redirecting": "جار التحويل..."
+  }
+}

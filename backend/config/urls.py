@@ -17,14 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from recipes.views import RejectView, FinalizeView
+from accounts.views import UserDetailView, UserListCreateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/auth/", include("accounts.urls")),
+    path("api/users/", UserListCreateView.as_view(), name="api-user-list-create"),
+    path("api/users/<int:pk>/", UserDetailView.as_view(), name="api-user-detail"),
     path("api/ingredients/", include("ingredients.urls")),
     path("api/categories/", include("categories.urls")),
     path("api/recipes/", include("recipes.urls")),
-    path("api/review/<int:pk>/reject/", RejectView.as_view(), name="review-reject"),
-    path("api/review/<int:pk>/finalize/", FinalizeView.as_view(), name="review-finalize"),
 ]
