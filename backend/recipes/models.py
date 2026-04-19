@@ -60,7 +60,7 @@ class SectionIngredient(models.Model):
         on_delete=models.PROTECT,
         related_name="section_ingredients",
     )
-    quantity = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    quantity = models.DecimalField(max_digits=12, decimal_places=2)
     unit = models.CharField(max_length=50, blank=True)
 
     class Meta:

@@ -10,7 +10,7 @@ from .utils import generate_unique_sku
 
 class SectionIngredientWriteSerializer(serializers.Serializer):
     ingredient_id = serializers.IntegerField()
-    quantity = serializers.DecimalField(max_digits=12, decimal_places=2, required=False, allow_null=True)
+    quantity = serializers.DecimalField(max_digits=12, decimal_places=2, required=True)
 
     def validate_ingredient_id(self, value):
         if not Ingredient.objects.filter(pk=value).exists():
